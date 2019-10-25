@@ -6,7 +6,7 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "test:unit": "vue-cli-service test:unit",
-    "desktop": "NODE_ENV=dev NODE_ENV=DEV electron electron.js"
+    "desktop": "NODE_ENV=dev electron desktop/index.js"
   },
   "dependencies": {
     "core-js": "^3.3.2",
@@ -28,6 +28,7 @@
     "@vue/cli-service": "^4.0.0",
     "@vue/test-utils": "1.0.0-beta.29",
     "electron": "^7.0.0",
+    "electron-settings": "^3.2.0",
     "typescript": "~3.5.3",
     "vue-template-compiler": "^2.6.10"
   }
