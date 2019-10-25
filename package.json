@@ -5,7 +5,8 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "test:unit": "vue-cli-service test:unit"
+    "test:unit": "vue-cli-service test:unit",
+    "desktop": "NODE_ENV=dev NODE_ENV=DEV electron electron.js"
   },
   "dependencies": {
     "core-js": "^3.3.2",
