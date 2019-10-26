@@ -1,7 +1,10 @@
 <template>
   <div class="container mx-auto p-6">
     <div class="flex justify-center">
-      <TimersTable :timers="timers" />
+      <TimersTable
+        :timers="timers"
+        @toggleTimer="toggleTimer"
+      />
     </div>
   </div>
 </template>
@@ -74,7 +77,10 @@ export default {
       ],
     };
   },
-  mounted() {
-  }
+  methods: {
+    toggleTimer(timer) {
+      timer.is_running = !timer.is_running;
+    },
+  },
 }
 </script>
