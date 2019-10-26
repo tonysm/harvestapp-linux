@@ -1,6 +1,12 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
+    <div>
+      <img height="50" width="50" alt="Vue logo" src="../assets/logo.png">
+    </div>
+
+    <div>
+      <input type="text" v-model="userToken" v-if="!user" />
+    </div>
   </div>
 </template>
 
@@ -11,7 +17,17 @@ import HelloWorld from '@/components/HelloWorld.vue'
 export default {
   name: 'home',
   components: {
-    HelloWorld
+    HelloWorld,
+  },
+  data () {
+    return {
+      userToken: null,
+      user: null,
+      loading: true,
+    };
+  },
+  mounted() {
+    this.$axi
   }
 }
 </script>

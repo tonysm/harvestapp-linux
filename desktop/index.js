@@ -15,8 +15,8 @@ const menuItems = require('./menu');
 
 let win,
     tray,
+    timerRunning = false,
     shouldClose = false;
-
 
 let url;
 
@@ -29,8 +29,8 @@ if (process.env.NODE_ENV === 'dev') {
 const HarvestAppLinux = {
     createWindow() {
         win = new BrowserWindow({
-            width: settings.get('width', 800),
-            height: settings.get('height', 600),
+            width: settings.get('width', 960),
+            height: settings.get('height', 760),
             autoHideMenuBar: true,
             icon: ICONS_PATH + `/${APP_ICON}.png`,
         });
@@ -49,12 +49,30 @@ const HarvestAppLinux = {
         });
     },
 
+    _showTimerOnIcon() {
+        tray.setImage(ICONS_PATH+`/${TRAY_ICON_ON}.png`);
+    },
+
+    _showTimerOffIcon() {
+        tray.setImage(ICONS_PATH+`/${TRAY_ICON_OFF}.png`);
+    },
+
+    _updateTrayIcon() {
+        if (timerRunning) {
+            this._showTimerOnIcon();
+        } else {
+            this._showTimerOffIcon();
+        }
+    },
+
     _buildTray(win) {
         tray = new Tray(ICONS_PATH+`/${TRAY_ICON_OFF}.png`);
 
         const contextMenu = Menu.buildFromTemplate(menuItems({
             onAddTimer: () => {
                 win.show();
+                timerRunning = !timerRunning;
+                this._updateTrayIcon();
             },
             onShow: () => {
                 win.show();
@@ -69,7 +87,7 @@ const HarvestAppLinux = {
         tray.setContextMenu(contextMenu);
 
         return tray;
-    }
+    },
 };
 
 app.on('ready', () => {
