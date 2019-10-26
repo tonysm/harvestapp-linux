@@ -8,6 +8,7 @@ import {
   StoreData,
   Timer,
 } from "@/store/types";
+import broadcaster from "@/broadcaster";
 
 Vue.use(Vuex);
 
@@ -32,6 +33,8 @@ export default new Vuex.Store({
       state.timers.items = timers;
     },
     [mutations.stopTimer](state: StoreData) {
+      broadcaster.send('timer:stop');
+
       state.timers.items = state.timers.items.map((t: Timer) => {
         return {
           ...t,
@@ -40,6 +43,8 @@ export default new Vuex.Store({
       });
     },
     [mutations.startTimer](state: StoreData, { timer }: { timer: Timer }) {
+      broadcaster.send('timer:start', { timer });
+
       state.timers.items = state.timers.items.map((t: Timer) => {
         return {
           ...t,

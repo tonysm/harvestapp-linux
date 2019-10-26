@@ -1,4 +1,4 @@
-const { app, BrowserWindow, Menu, Tray } = require('electron');
+const { app, BrowserWindow, Menu, Tray, ipcMain } = require('electron');
 
 const settings = require('electron-settings');
 const path = require('path');
@@ -33,6 +33,9 @@ const HarvestAppLinux = {
             height: settings.get('height', 760),
             autoHideMenuBar: true,
             icon: ICONS_PATH + `/${APP_ICON}.png`,
+            webPreferences: {
+                nodeIntegration: true,
+            },
         });
         win.loadURL(url);
 
@@ -47,14 +50,23 @@ const HarvestAppLinux = {
                 win.hide();
             }
         });
+
+        ipcMain.on('timer:stop', () => {
+            this._showTimerOffIcon();
+        });
+        ipcMain.on('timer:start', (e, params) => {
+            this._showTimerOnIcon(params);
+        });
     },
 
-    _showTimerOnIcon() {
+    _showTimerOnIcon({ timer }) {
         tray.setImage(ICONS_PATH+`/${TRAY_ICON_ON}.png`);
+        tray.setToolTip(`Running: ${timer.notes}`);
     },
 
     _showTimerOffIcon() {
         tray.setImage(ICONS_PATH+`/${TRAY_ICON_OFF}.png`);
+        tray.setToolTip('No timer running.');
     },
 
     _updateTrayIcon() {
