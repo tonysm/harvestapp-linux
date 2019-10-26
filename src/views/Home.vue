@@ -3,6 +3,7 @@
     <div class="flex justify-center">
       <TimersTable
         :timers="timers"
+        :loading="loading"
         @toggleTimer="(timer) => toggleTimer(timer)"
       />
     </div>
@@ -21,7 +22,7 @@ export default {
   },
   computed: {
     ...mapState({
-      loading: (state) => state.timers.state === Status.loading,
+      loading: (state) => state.timers.status === Status.loading,
       timers: (state) => state.timers.items,
     }),
   },

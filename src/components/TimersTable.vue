@@ -27,6 +27,9 @@
                 </Button>
             </td>
         </tr>
+        <tr v-if="loading" class="bg-orange-100 text-center">
+            <td colspan="3" class="px-6 py-24">Loading...</td>
+        </tr>
         </tbody>
     </table>
 </template>
@@ -40,6 +43,10 @@ export default {
         Button,
     },
     props: {
+        loading: {
+            type: Boolean,
+            required: true,
+        },
         timers: {
             type: Array,
             default: () => [],
