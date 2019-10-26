@@ -3,7 +3,7 @@
     <div class="flex justify-center">
       <TimersTable
         :timers="timers"
-        @toggleTimer="toggleTimer"
+        @toggleTimer="(timer) => toggleTimer(timer)"
       />
     </div>
   </div>
@@ -11,76 +11,33 @@
 
 <script>
 import TimersTable from "@/components/TimersTable";
+import { mapState } from 'vuex';
+import { actions, Status } from "@/store/types";
 
 export default {
   name: 'home',
   components: {
     TimersTable,
   },
-  data () {
-    return {
-      timers: [
-        {
-          id: 1,
-          notes: 'Lorem ipsum',
-          is_running: false,
-          hours: 3.4,
-          client: {
-            id: 1,
-            name: 'madewithlove',
-          },
-          project: {
-            id: 1,
-            name: 'Internal'
-          },
-          task: {
-            id: 1,
-            name: 'Friyay',
-          },
-        },
-        {
-          id: 2,
-          notes: 'Lorem ipsum',
-          is_running: true,
-          hours: 3.4,
-          client: {
-            id: 1,
-            name: 'madewithlove',
-          },
-          project: {
-            id: 1,
-            name: 'Internal'
-          },
-          task: {
-            id: 1,
-            name: 'Friyay',
-          },
-        },
-        {
-          id: 3,
-          notes: 'Lorem ipsum',
-          is_running: false,
-          hours: 3.4,
-          client: {
-            id: 1,
-            name: 'madewithlove',
-          },
-          project: {
-            id: 1,
-            name: 'Internal'
-          },
-          task: {
-            id: 1,
-            name: 'Friyay',
-          },
-        },
-      ],
-    };
+  computed: {
+    ...mapState({
+      loading: (state) => state.timers.state === Status.loading,
+      timers: (state) => state.timers.items,
+    }),
   },
   methods: {
     toggleTimer(timer) {
-      timer.is_running = !timer.is_running;
-    },
+      this.$store.dispatch({
+        type: actions.toggleTimer,
+        timer,
+      });
+    }
+  },
+  mounted() {
+    this.$store.dispatch({
+      type: actions.loadTimers,
+      token: 'lorem',
+    });
   },
 }
 </script>

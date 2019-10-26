@@ -1,7 +1,7 @@
 module.exports = function ({ onAddTimer, onShow, onClose }) {
     return [
         {
-            label: 'Add timer',
+            label: 'Start/Stop last timer',
             type: 'radio',
             click: () => {
                 onAddTimer();
