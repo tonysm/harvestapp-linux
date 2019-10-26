@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" class="w-full lg:w-2/3  mx-auto">
     <navigation />
     <router-view/>
   </div>
